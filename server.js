@@ -23,20 +23,22 @@ async function  init(){
     // addmin user
 // 2step 
     let admin = await userModel.findOne({
-    userId: "admin"
+    userType: "ADMIN"
 })
  
 if(admin){
-    console.log("admin user alread")
+    console.log("admin user already exist")
     return;
 }
 // 1step 
      admin = await userModel.create({
         name: "Iron Man",
-        userId: "admin",
+        userId: "iron",
         email: "tonyStark@gmail.com",
         userType: "ADMIN",
-        password:"jarvis"
+        // hashing the password before storing
+        password: bcrypt.hashSync("jarvis", 10) 
+
     })
 console.log(admin)
 }
@@ -51,4 +53,4 @@ console.log(admin)
 //     console.log("Db is connected")
 // })
 // 
-// kcCneqQgwsLUxrEy
+// PASSWORD: kcCneqQgwsLUxrEy
