@@ -2,6 +2,7 @@ const express = require("express")
 const serverConfig = require("./configs/server.config.js")
 const dbConfig = require("./configs/db.config.js")
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
 // const { init } = require("./models/user.model.js")
 const app = express()
 const userModel = require("./models/user.model.js")
@@ -20,7 +21,8 @@ mongoose.connect(dbConfig.DB_URL).then(()=>{
 
 async function  init(){
     // addmin user
-let admin = await userModel.findOne({
+// 2step 
+    let admin = await userModel.findOne({
     userId: "admin"
 })
  
@@ -28,9 +30,10 @@ if(admin){
     console.log("admin user alread")
     return;
 }
+// 1step 
      admin = await userModel.create({
         name: "Iron Man",
-        userId: "iron",
+        userId: "admin",
         email: "tonyStark@gmail.com",
         userType: "ADMIN",
         password:"jarvis"
